@@ -1,0 +1,4 @@
+# app-ads.txt for Nova Rush (https://iabtechlab.com/ads-txt/)
+# Must stay at the ROOT of the developer website listed in App Store Connect.
+# If AdMob mediation partners are added later, append their lines below.
+google.com, pub-3368425428590680, DIRECT, f08c47fec0942fa0
