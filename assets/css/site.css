@@ -49,22 +49,36 @@ h3 { font-size: 22px; }
 .hero-art::after { content: ""; position: absolute; inset: 0;
   background: radial-gradient(34% 42% at 50% 74%, rgba(7, 11, 26, .72), transparent 80%),
               linear-gradient(180deg, rgba(7, 11, 26, .5) 0, transparent 14%, transparent 52%, rgba(7, 11, 26, .85) 86%, var(--bg) 100%); }
-@media (min-width: 1500px) { .hero { padding-top: calc(min(100vw, 2400px) * .30); } }
+/* Desktop/laptop: keep the download card above the fold on short screens (e.g. 1440x900, 1366x768). */
+@media (min-width: 701px) {
+  .hero { padding-top: max(120px, min(calc(min(100vw, 2400px) * .25), calc(100vh - 600px))); }
+  .hero .hero-logo { width: clamp(300px, 42vh, 420px); }
+}
+@media (min-width: 1500px) { .hero { padding-top: max(120px, min(calc(min(100vw, 2400px) * .30), calc(100vh - 600px))); } }
 @keyframes drift { from { transform: scale(1.02); } to { transform: scale(1.06) translate3d(-.8%, -.6%, 0); } }
 .hero-in { text-align: center; display: flex; flex-direction: column; align-items: center; }
 .hero-logo { margin: 0 0 6px; width: min(420px, 74vw); filter: drop-shadow(0 10px 30px rgba(0, 0, 0, .55)); animation: bob 5s ease-in-out infinite; }
 @keyframes bob { 50% { transform: translateY(-6px); } }
 .tagline { font: 800 clamp(24px, 3.4vw, 34px)/1.1 var(--display); margin: 0 0 10px; color: #fff; text-shadow: 0 0 18px rgba(61, 232, 255, .55); }
 .hero-sub { max-width: 640px; margin: 0 0 24px; color: #C9D7F2; font-size: 18px; text-shadow: 0 1px 8px rgba(0, 0, 0, .8); }
-.store-card { display: flex; align-items: center; gap: 16px; padding: 12px 14px 12px 12px; border-radius: 24px; background: rgba(14, 23, 51, .82); border: 1px solid var(--line2); box-shadow: 0 18px 50px rgba(0, 0, 0, .45), 0 0 40px rgba(61, 232, 255, .12); text-align: left; backdrop-filter: blur(8px); }
+/* Download card: the whole card is one link to the App Store. The badge inside is Apple's official artwork:
+   never modified or animated, height >= 40 px, clear space >= 1/4 of its height (Apple marketing guidelines). */
+.store-card { display: flex; align-items: center; gap: 18px; margin: 6px 0 20px; padding: 14px; border-radius: 24px; color: var(--text); text-decoration: none; text-align: left;
+  background: rgba(14, 23, 51, .86); border: 1px solid var(--line2); box-shadow: 0 18px 50px rgba(0, 0, 0, .45), 0 0 44px rgba(61, 232, 255, .2);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: transform .2s ease-out, border-color .2s ease-out, box-shadow .2s ease-out; -webkit-tap-highlight-color: transparent; }
+.store-card:hover, .store-card:focus-visible { color: var(--text); border-color: var(--cyan); transform: translateY(-2px); box-shadow: 0 22px 56px rgba(0, 0, 0, .5), 0 0 60px rgba(61, 232, 255, .38); }
+.store-card:active { transform: translateY(0) scale(.99); }
+.store-card:focus-visible { outline-offset: 4px; border-radius: 24px; }
 .app-icon { width: 76px; height: 76px; border-radius: 18px; box-shadow: 0 6px 18px rgba(0, 0, 0, .5); }
 .store-meta { display: flex; flex-direction: column; line-height: 1.3; }
 .store-meta strong { font: 800 19px/1.2 var(--display); }
 .store-meta span { color: var(--muted); font-size: 14px; }
-.soon { display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px; border-radius: 14px; font-weight: 700; font-size: 15px; white-space: nowrap;
-  color: var(--bg); background: linear-gradient(180deg, #7FF2FF, var(--cyan)); box-shadow: 0 0 0 1px rgba(255, 255, 255, .25) inset, 0 0 26px rgba(61, 232, 255, .45); animation: pulse 2.8s ease-in-out infinite; }
-@keyframes pulse { 50% { box-shadow: 0 0 0 1px rgba(255, 255, 255, .25) inset, 0 0 40px rgba(61, 232, 255, .7); } }
-.soon.big { font-size: 18px; padding: 14px 26px; }
+.badge-box { display: block; flex: none; }
+.store-badge { display: block; height: 56px; width: auto; }
+.store-badge.big { height: 64px; }
+.store-link { display: inline-block; padding: 16px; border-radius: 20px; -webkit-tap-highlight-color: transparent; transition: background-color .2s ease-out; }
+.store-link:hover { background: rgba(61, 232, 255, .08); }
+.store-link:focus-visible { outline-offset: 0; border-radius: 20px; }
 .pills { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 0; margin: 22px 0 0; }
 .pills li { padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line2); background: rgba(7, 11, 26, .6); color: #CFE6FF; font-size: 14px; font-weight: 700; }
 @media (max-width: 700px) {
@@ -72,10 +86,17 @@ h3 { font-size: 22px; }
   .hero-art { position: relative; inset: auto; aspect-ratio: 3 / 2; }
   .hero-art img { animation: none; aspect-ratio: 3 / 2; height: 100%; }
   .hero-art::after { background: linear-gradient(180deg, transparent 50%, var(--bg) 100%); }
-  .hero-in { margin-top: -18vw; }
-  .store-card { flex-wrap: wrap; justify-content: center; text-align: center; padding: 14px; }
-  .store-card .store-meta { align-items: center; }
-  .app-icon { width: 64px; height: 64px; }
+  .hero-in { margin-top: -24vw; }
+  .hero-logo { width: min(420px, 60vw); }
+  .tagline { font-size: 24px; }
+  .store-card { display: grid; grid-template-columns: auto 1fr; gap: 14px; width: min(100%, 400px); margin: 4px 0 18px; padding: 14px; }
+  .store-meta strong { font-size: 17px; }
+  .store-meta span { font-size: 13px; }
+  .store-card source { display: none; }
+  .store-card .app-icon { grid-column: 1; grid-row: 1; }
+  .store-card .store-meta { grid-column: 2; grid-row: 1; }
+  .badge-box { grid-column: 1 / -1; grid-row: 2; justify-self: center; }
+  .app-icon { width: 56px; height: 56px; border-radius: 14px; }
   .hero-sub { font-size: 16px; }
 }
 
