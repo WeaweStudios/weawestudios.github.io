@@ -188,8 +188,6 @@ h3 { font-size: 22px; }
 .doc p, .doc li { color: #CAD6EE; }
 .doc li + li { margin-top: 4px; }
 .updated { color: var(--muted); font-size: 14px; }
-.draft { margin: 18px 0 28px; padding: 14px 18px; border-radius: 14px; background: rgba(255, 194, 74, .08); border: 1px solid rgba(255, 194, 74, .45); color: #F5E7C4; font-size: 15px; }
-.draft strong { color: var(--gold); }
 .toc { padding: 16px 20px; border-radius: 14px; background: var(--panel); border: 1px solid var(--line); }
 .toc ol { columns: 2; column-gap: 28px; margin: 0; padding-left: 20px; font-size: 15px; }
 @media (max-width: 560px) { .toc ol { columns: 1; } }
